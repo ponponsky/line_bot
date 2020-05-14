@@ -1,0 +1,4 @@
+###### Mac debris ########
+.DS_Store
+###### Python debris ########
+*.pyc
