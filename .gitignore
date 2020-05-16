@@ -2,3 +2,5 @@
 .DS_Store
 ###### Python debris ########
 *.pyc
+###### VS debris ########
+/.vscode/
