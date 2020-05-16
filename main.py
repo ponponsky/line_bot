@@ -51,8 +51,8 @@ def message_text(event):
         )
         line_bot_api.reply_message(event.reply_token, messages=msgs)
     elif in_text in choiceList1:
-        msg = f"選ばれたのは「{in_text}」でした！"
-        line_bot_api.reply_message(event.reply_token, messages=msg)
+        msg = TextSendMessage(text = f"選ばれたのは「{in_text}」でした！")
+        line_bot_api.reply_message(event.reply_token, msg)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
