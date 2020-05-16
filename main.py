@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
-from linebot.models import (MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, MessageAction, QuickReply)
+from linebot.models import (MessageEvent, TextMessage, ImageMessage, TextSendMessage, QuickReplyButton, MessageAction, QuickReply)
 
 app = Flask(__name__)
 
