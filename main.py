@@ -10,10 +10,6 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage, QuickRep
 app = Flask(__name__)
 
 # get channel_secret and channel_access_token from your environment variable
-channel_access_token,channel_secret = GetCertInfo()
-line_bot_api = LineBotApi(channel_access_token)
-handler = WebhookHandler(channel_secret)
-
 def GetCertInfo():
     channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
     channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
@@ -24,6 +20,10 @@ def GetCertInfo():
         print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
         sys.exit(1)
     return [channel_secret, channel_access_token]
+
+channel_access_token,channel_secret = GetCertInfo()
+line_bot_api = LineBotApi(channel_access_token)
+handler = WebhookHandler(channel_secret)
 
 @app.route("/callback", methods=['POST'])
 def callback():
