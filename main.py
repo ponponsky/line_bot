@@ -38,16 +38,21 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
-    choiceList_Text = ["選択肢①","選択肢②","選択肢③"]
-    items = [
-        QuickReplyButton(action=MessageAction(label=f"{text}", text=f"{text}_text"))
-        for text in choiceList_Text
-    ]
-    msgs = TextSendMessage(
-        text="↓選択肢を選んでね↓"
-        ,quick_reply=QuickReply(items=items)
-    )
-    line_bot_api.reply_message(event.reply_token, messages=msgs)
+    in_text = event.message.text
+    choiceList1 = ["選択肢①","選択肢②","選択肢③"]
+    if in_text == "選択肢":
+        items = [
+            QuickReplyButton(action=MessageAction(label=f"{text}", text=f"{text}"))
+            for text in choiceList1
+        ]
+        msgs = TextSendMessage(
+            text="↓選択肢を選んでね↓"
+            ,quick_reply=QuickReply(items=items)
+        )
+        line_bot_api.reply_message(event.reply_token, messages=msgs)
+    elif in_text in choiceList1:
+        msg = f"選ばれたのは「{in_text}」でした！"
+        line_bot_api.reply_message(event.reply_token, messages=msg)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
