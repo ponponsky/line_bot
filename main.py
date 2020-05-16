@@ -46,11 +46,8 @@ def message_text(event):
             QuickReplyButton(action=MessageAction(label=f"{text}", text=f"{text}"))
             for text in choiceList1
         ]
-        msgs = TextSendMessage(
-            text="↓選択肢を選んでね↓"
-            ,quick_reply=QuickReply(items=items)
-        )
-        line_bot_api.reply_message(event.reply_token, messages=msgs)
+        message = "↓選択肢を選んでね↓"
+        SendQuickReply(event, items, message)
     elif in_text in choiceList1:
         message = f"選ばれたのは「{in_text}」でした！"
         SendMessage(event, message)
@@ -60,6 +57,7 @@ def handle_image(event):
     message_id = event.message.id
     message_content = line_bot_api.get_message_content(message_id)
     img = BytesIO(message_content.content)
+    SendMessage(event, "画像を受け取ったよ")
 
 def SendMessage(event, message):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text = message))
