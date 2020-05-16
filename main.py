@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+from io import BytesIO
 from argparse import ArgumentParser
 from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
@@ -51,8 +52,23 @@ def message_text(event):
         )
         line_bot_api.reply_message(event.reply_token, messages=msgs)
     elif in_text in choiceList1:
-        msg = TextSendMessage(text = f"選ばれたのは「{in_text}」でした！")
-        line_bot_api.reply_message(event.reply_token, msg)
+        message = f"選ばれたのは「{in_text}」でした！"
+        line_bot_api.reply_message(event.reply_token, message)
+
+@handler.add(MessageEvent, message=ImageMessage)
+def handle_image(event):
+    message_id = event.message.id
+    message_content = line_bot_api.get_message_content(message_id)
+    image = BytesIO(message_content.content)
+
+def SendMessage(event, message):
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text = message))
+
+def SendQuickReply(event, items, message):
+    line_bot_api.reply_message(
+        event.reply_token
+        ,TextSendMessage(message, QuickReply(items))
+    )
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
