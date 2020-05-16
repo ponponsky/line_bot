@@ -53,13 +53,13 @@ def message_text(event):
         line_bot_api.reply_message(event.reply_token, messages=msgs)
     elif in_text in choiceList1:
         message = f"選ばれたのは「{in_text}」でした！"
-        line_bot_api.reply_message(event.reply_token, message)
+        SendMessage(event, message)
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
     message_id = event.message.id
     message_content = line_bot_api.get_message_content(message_id)
-    image = BytesIO(message_content.content)
+    img = BytesIO(message_content.content)
 
 def SendMessage(event, message):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text = message))
