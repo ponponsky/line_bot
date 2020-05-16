@@ -49,10 +49,11 @@ def message_text(event):
         QuickReplyButton(action=MessageAction(label=f"{text}", text=f"{text}_text"))
         for text in choiceList_Text
     ]
-    messages = TextSendMessage(
+    msgs = TextSendMessage(
         text="↓選択肢を選んでね↓"
         ,quick_reply=QuickReply(items=items)
     )
+    line_bot_api.reply_message(event.reply_token, messages=msgs)
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
